@@ -1,12 +1,12 @@
 package main
 
-import "fmt"
-
 var results []string
 
 func generateParenthesis(n int) []string {
 
 	results = []string{}
+
+	backtrack(n, n, "")
 
 	return results
 
@@ -17,8 +17,12 @@ func backtrack(left int, right int, s string) {
 	if left == 0 && right == 0 {
 		if isValidParenthesis(s) {
 			results = append(results, s)
+			return
 		}
 	}
+
+	backtrack(left-1, right, s+"(")
+	backtrack(left, right-1, s+")")
 
 }
 
@@ -40,12 +44,4 @@ func isValidParenthesis(s string) bool {
 	}
 
 	return len(stack) == 0
-}
-
-func main() {
-	a := []string{}
-	b := "abc"
-	a = append(a, b)
-	b = "ab"
-	fmt.Print(a)
 }

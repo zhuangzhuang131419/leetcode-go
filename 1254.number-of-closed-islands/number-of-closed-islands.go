@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func numIslands(grid [][]byte) int {
+func closedIsland(grid [][]int) int {
 	m := len(grid)
 	n := len(grid[0])
 	visited := make([][]bool, m)
@@ -11,10 +11,20 @@ func numIslands(grid [][]byte) int {
 		visited[i] = make([]bool, n)
 	}
 
+	for i := 0; i < m; i++ {
+		dfs(grid, i, 0, visited)
+		dfs(grid, i, n-1, visited)
+	}
+
+	for i := 0; i < n; i++ {
+		dfs(grid, 0, i, visited)
+		dfs(grid, m-1, i, visited)
+	}
+
 	count := 0
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {
-			if !visited[i][j] && grid[i][j] == '1' {
+			if !visited[i][j] && grid[i][j] == 0 {
 				dfs(grid, i, j, visited)
 				count++
 			}
@@ -24,7 +34,7 @@ func numIslands(grid [][]byte) int {
 	return count
 }
 
-func dfs(grid [][]byte, i int, j int, visited [][]bool) {
+func dfs(grid [][]int, i int, j int, visited [][]bool) {
 	m := len(grid)
 	n := len(grid[0])
 
@@ -37,7 +47,7 @@ func dfs(grid [][]byte, i int, j int, visited [][]bool) {
 	}
 
 	visited[i][j] = true
-	if grid[i][j] == '1' {
+	if grid[i][j] == 0 {
 		dfs(grid, i+1, j, visited)
 		dfs(grid, i, j+1, visited)
 		dfs(grid, i-1, j, visited)
@@ -46,10 +56,12 @@ func dfs(grid [][]byte, i int, j int, visited [][]bool) {
 }
 
 func main() {
-	grid := [][]byte{
-		{'1', '1', '1'},
-		{'0', '1', '0'},
-		{'1', '1', '1'},
+	grid := [][]int{
+		{1, 1, 1, 1, 1, 1, 1, 0},
+		{1, 0, 0, 0, 0, 1, 1, 0},
+		{1, 0, 1, 0, 1, 1, 1, 0},
+		{1, 0, 0, 0, 0, 1, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 0},
 	}
-	fmt.Printf("%v\n", numIslands(grid))
+	fmt.Printf("%v\n", closedIsland(grid))
 }
