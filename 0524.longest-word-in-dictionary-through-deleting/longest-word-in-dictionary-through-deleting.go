@@ -25,7 +25,7 @@ func findLongestWord(s string, dictionary []string) string {
 		}
 
 		if j == len(word) {
-			if len(word) > len(result) {
+			if len(word) > len(result) || len(word) == len(result) && result > word {
 				result = word
 			}
 		}
