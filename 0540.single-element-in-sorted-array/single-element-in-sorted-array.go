@@ -1,13 +1,15 @@
-func singleNonDuplicate(nums []int) int {
-	low := 0
-	high := len(nums) - 1
+package leetcode
 
-	for low <= high {
-		if low == high {
-			return nums[low]
+func singleNonDuplicate(nums []int) int {
+	left := 0
+	right := len(nums) - 1
+
+	for left <= right {
+		if left == right {
+			return nums[right]
 		}
 
-		mid := (low + high) / 2
+		mid := (left + right) / 2
 		if nums[mid-1] == nums[mid] {
 
 			if mid%2 == 0 {
@@ -18,14 +20,14 @@ func singleNonDuplicate(nums []int) int {
 
 		} else if nums[mid+1] == nums[mid] {
 			if mid%2 == 0 {
-				right = mid - 2
+				left = mid + 2
 			} else {
-				left = mid + 1
+				right = mid - 1
 			}
 
 		} else {
 			return nums[mid]
 		}
 	}
-
+	return -1
 }

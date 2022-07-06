@@ -23,17 +23,13 @@ func findMin(nums []int) int {
 
 		mid := (left + right) / 2
 
-		if nums[mid] > nums[left] {
-			if nums[right] > nums[left] {
-				return nums[left]
-			} else {
-				left = mid + 1
-			}
-		} else if nums[mid] < nums[left] {
-			{
-				right = mid
-				left = left + 1
-			}
+		if nums[mid] < nums[right] {
+			right = mid
+		} else if nums[mid] == nums[right] {
+			right = right - 1
+		} else {
+			// mid > right
+			left = mid + 1
 		}
 		fmt.Printf("left = %v, right = %v\n", left, right)
 	}
